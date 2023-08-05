@@ -1,0 +1,350 @@
+{
+  "config": {
+    "axis": {
+      "domainWidth": 1,
+      "grid": true,
+      "labelPadding": 2,
+      "tickSize": 5,
+      "tickWidth": 0.5,
+      "titleFontWeight": "bold",
+      "labelFontSize": 16
+    },
+    "axisBand": {"grid": false},
+    "axisX": {"gridWidth": 0.5},
+    "axisY": {"gridWidth": 1},
+    "legend": {
+      "labelFontSize": 16,
+      "padding": 1,
+      "symbolSize": 100,
+      "symbolType": "square",
+      "symbolStrokeWidth": 3
+    },
+    "range": {
+      "category": [
+        "#3e5c69",
+        "#6793a6",
+        "#182429",
+        "#0570b0",
+        "#3690c0",
+        "#74a9cf",
+        "#a6bddb",
+        "#e2ddf2"
+      ]
+    }
+  },
+  "width": "container",
+  "height": 100,
+  "data": {"name": "dataset"},
+  "params": [
+    {
+      "name": "cutoff_year",
+      "value": 2018
+    }
+  ],
+  "transform": [
+    {
+      "filter": "!((month(datum['__0__']) == 1) && (date(datum['__0__']) == 29))"
+    },
+    {
+      "calculate": "now()",
+      "as": "today"
+    },
+    {
+      "calculate": "year(datum['__0__'])",
+      "as": "year"
+    },
+    {
+      "timeUnit": "monthdate",
+      "field": "__0__",
+      "as": "doy"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "mean",
+          "field": "__2__",
+          "as": "mval"
+        },
+        {
+          "op": "max",
+          "field": "__2__",
+          "as": "maxval"
+        },
+        {
+          "op": "min",
+          "field": "__2__",
+          "as": "minval"
+        }
+      ],
+      "groupby": ["doy"]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "doy",
+      "type": "temporal",
+      "timeUnit": "monthdate",
+      "title": "",
+      "axis": {"format": "%d-%b"}
+    },
+    "y": {"scale": {"zero": false}}
+  },
+  "layer": [
+    {
+      "encoding": {
+        "x": {
+          "aggregate": "max",
+          "field": "doy",
+          "type": "temporal",
+          "timeUnit": "monthdate"
+        },
+        "y": {
+          "aggregate": {
+            "argmax": "doy"
+          },
+          "field": "mval",
+          "type": "quantitative"
+        }
+      },
+      "layer": [
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "year",
+                "lt": {
+                  "expr": "cutoff_year"
+                }
+              }
+            }
+          ],
+          "mark": {"type": "circle"}
+        },
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "year",
+                "lt": {
+                  "expr": "cutoff_year"
+                }
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 4
+          },
+          "encoding": {
+            "text": {
+              "aggregate": "min",
+              "field": "__0__",
+              "type": "temporal",
+              "format": "%y"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "year",
+                "lt": {
+                  "expr": "cutoff_year"
+                }
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 19
+          },
+          "encoding": {
+            "text": {"value": "-"}
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "year",
+                "lt": {
+                  "expr": "cutoff_year"
+                }
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 25
+          },
+          "encoding": {
+            "text": {
+              "aggregate": "max",
+              "field": "__0__",
+              "type": "temporal",
+              "format": "%y"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "year",
+                "lt": {
+                  "expr": "cutoff_year"
+                }
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dy": 0,
+            "dx": 40
+          },
+          "encoding": {
+            "text": {"value": "range"}
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "year",
+            "lt": {
+              "expr": "cutoff_year"
+            }
+          }
+        }
+      ],
+      "mark": {
+        "opacity": 0.2,
+        "type": "area",
+        "tooltip": false
+      },
+      "encoding": {
+        "y": {
+          "aggregate": "max",
+          "field": "__2__",
+          "type": "quantitative"
+        },
+        "y2": {
+          "aggregate": "min",
+          "field": "__2__"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "year",
+            "lt": {
+              "expr": "cutoff_year"
+            }
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "tooltip": true,
+        "strokeWidth": 0.45,
+        "stroke": "black"
+      },
+      "encoding": {
+        "y": {
+          "field": "mval",
+          "type": "quantitative",
+          "title": ""
+        }
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "value": [
+            {
+              "year": [
+                2015,
+                2016,
+                2017,
+                2018,
+                2019,
+                2020,
+                2021,
+                2022,
+                2023,
+                2024,
+                2025
+              ]
+            }
+          ],
+          "select": {
+            "type": "point",
+            "fields": ["year"],
+            "on": "mouseover"
+          }
+        }
+      ],
+      "transform": [
+        {
+          "filter": {
+            "field": "year",
+            "gt": {
+              "expr": "cutoff_year"
+            }
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "tooltip": true
+      },
+      "encoding": {
+        "opacity": {
+          "condition": {
+            "param": "hover",
+            "value": 1
+          },
+          "value": 0.5
+        },
+        "color": {
+          "field": "year",
+          "title": null,
+          "scale": {
+            "scheme": "set1",
+            "reverse": false
+          },
+          "sort": "descending",
+          "type": "nominal"
+        },
+        "y": {
+          "field": "__2__",
+          "type": "quantitative"
+        },
+        "strokeDash": {
+          "field": "datum['__1__']",
+          "type": "nominal",
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {"type": "rule"},
+      "encoding": {
+        "x": {"field": "today"},
+        "strokeDash": {"value": [2, 4]},
+        "strokeWidth": {"value": 0.5},
+        "color": {"value": "grey"}
+      }
+    }
+  ]
+}

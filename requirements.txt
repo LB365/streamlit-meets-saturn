@@ -1,0 +1,7 @@
+articdb==1.6.0
+streamlit==1.24.0
+Pillow==4.0.0
+python-dotenv
+pandas
+numpy
+tshistory

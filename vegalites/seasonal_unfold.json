@@ -1,0 +1,196 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.4.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.4.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": true,
+      "highlight": false,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "seasonal-deneb",
+      "description": "plot seasonal time series, can use a \"predicted\" column to change the line type",
+      "author": "Loic Balland",
+      "uuid": "ed97caa9-2c57-47bf-9a92-d79cff3da451",
+      "generated": "2022-09-25T14:42:12.744Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "date",
+        "description": "",
+        "type": "dateTime",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "predicted",
+        "description": "Boolean flagging if the data is predicted",
+        "type": "bool",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "Value",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "axis": {
+      "domainWidth": 1,
+      "grid": true,
+      "labelPadding": 2,
+      "tickSize": 5,
+      "tickWidth": 0.5,
+      "titleFontWeight": "bold",
+      "labelFontSize": 16
+    },
+    "axisBand": {"grid": false},
+    "axisX": {"gridWidth": 0.5},
+    "axisY": {"gridWidth": 1},
+    "legend": {
+      "labelFontSize": 16,
+      "padding": 1,
+      "symbolSize": 100,
+      "symbolType": "square",
+      "symbolStrokeWidth": 3
+    },
+    "range": {
+      "category": [
+        "#3e5c69",
+        "#6793a6",
+        "#182429",
+        "#0570b0",
+        "#3690c0",
+        "#74a9cf",
+        "#a6bddb",
+        "#e2ddf2"
+      ]
+    }
+  },
+  "data": {"name": "dataset"},
+  "params": [{"name": "cutoff_year", "value": 2018}],
+  "transform": [
+    {
+      "filter": "!((month(datum['__0__']) == 1) && (date(datum['__0__']) == 29))"
+    },
+    {"calculate": "now()", "as": "today"},
+    {"calculate": "year(datum['__0__'])", "as": "year"},
+    {"timeUnit": "monthdate", "field": "__0__", "as": "doy"},
+    {
+      "joinaggregate": [
+        {"op": "median", "field": "__2__", "as": "mval"},
+        {"op": "q3", "field": "__2__", "as": "maxval"},
+        {"op": "q1", "field": "__2__", "as": "minval"}
+      ],
+      "groupby": ["doy"]
+    }
+  ],
+  "encoding": {
+    "x": {"field": "__0__", "type": "temporal", "title": ""},
+    "y": {"scale": {"zero": false}}
+  },
+  "layer": [
+    {
+      "mark": {"opacity": 0.2, "type": "area", "tooltip": false},
+      "encoding": {
+        "y": {"field": "minval", "type": "quantitative"},
+        "y2": {"field": "maxval"}
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "tooltip": true,
+        "strokeWidth": 0.45,
+        "stroke": "black"
+      },
+      "encoding": {"y": {"field": "mval", "type": "quantitative", "title": ""}}
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "value": [
+            {
+              "year": [
+                2015,
+                2016,
+                2017,
+                2018,
+                2019,
+                2020,
+                2021,
+                2022,
+                2023,
+                2024,
+                2025
+              ]
+            }
+          ],
+          "select": {"type": "point", "fields": ["year"], "on": "mouseover"}
+        }
+      ],
+      "mark": {"type": "line", "tooltip": true},
+      "encoding": {
+        "y": {"field": "__2__", "type": "quantitative"},
+        "strokeDash": {
+          "field": "datum['__1__']",
+          "type": "nominal",
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {"type": "rule"},
+      "encoding": {
+        "x": {"field": "today"},
+        "strokeDash": {"value": [2, 4]},
+        "strokeWidth": {"value": 0.5},
+        "color": {"value": "grey"}
+      }
+    }
+  ],
+  "autosize": {"type": "fit", "contains": "padding"},
+  "config": {
+    "background": "#ffffff",
+    "axis": {
+      "labelColor": "#31333F",
+      "titleColor": "#31333F",
+      "gridColor": "rgba(49, 51, 63, 0.2)",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelColor": "#31333F",
+      "titleColor": "#31333F",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "title": {
+      "color": "#31333F",
+      "subtitleColor": "#31333F",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "header": {"labelColor": "#31333F"},
+    "view": {"continuousHeight": 350, "continuousWidth": 400}
+  },
+  "padding": {"bottom": 20}
+}
