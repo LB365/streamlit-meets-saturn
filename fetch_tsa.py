@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 from tshistory.api import timeseries
 from dotenv import load_dotenv
+
 load_dotenv()
 TSA = timeseries(os.getenv('tsa_url'))
 CATALOG = TSA.catalog()

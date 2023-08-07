@@ -1,11 +1,8 @@
 import datetime
 import streamlit as st
 from pathlib import Path
-<<<<<<< HEAD
-from fetch import fetch_catalog, fetch_series
-=======
 from fetch_tsa import fetch_catalog, fetch_series
->>>>>>> 57e236a0a42b583994600af2986168280e5cbf4b
+
 st.set_page_config(
     page_title="saturn_graphs",
     page_icon="🧊",
@@ -31,4 +28,3 @@ with col2:
 if len(options) > 0:
     data = fetch_series(options, start_date)
     st.bar_chart(data)
-

@@ -51,12 +51,12 @@ def plot_lines(
             title=alt.Title(title, anchor=alt.TitleAnchor('start'))
         )
         chart = (base.mark_line()
-             .encode(
+                 .encode(
             x=alt.X('date').title(""),
             y=alt.Y('value').title(""),
             color=alt.Color('label').title(""),
         ) + base.mark_rule().encode(x='now')
-             ).interactive(bind_y=False)
+                 ).interactive(bind_y=False)
         st.altair_chart(chart, use_container_width=True, theme=None)
 
 

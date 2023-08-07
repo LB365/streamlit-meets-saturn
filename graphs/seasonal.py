@@ -12,7 +12,7 @@ from graphs import Plot
 CUTOFF_YEARS = [2018, 2019, 2020, 2021, 2022]
 with open(HERE / 'vegalites' / 'seasonal.json') as file:
     VEGA_SEASONAL = json.load(file)
-with open(HERE / 'vegalites'  / 'seasonal_unfold.json') as file:
+with open(HERE / 'vegalites' / 'seasonal_unfold.json') as file:
     VEGA_SEASONAL_UNFOLD = json.load(file)
 
 SEASONAL_COLS_DICT = {
