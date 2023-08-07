@@ -13,7 +13,7 @@ from fetch_artic import (
 
 from graphs.seasonal import Seasonal
 from graphs.line import Line
-
+from graphs.pipe_args import pipe_args_in_plot_method
 available_plot_types = list(set(artic_list_libraries()).intersection(graph_types))
 
 SEASONAL_COLS = list(Seasonal.column_types.keys())
@@ -127,35 +127,16 @@ with tab_view:
             "Plot type view",
             available_plot_types
         )
-    graphs_view = artic_list_symbols(plot_type_view)
-    with col_rest:
+        graphs_view = artic_list_symbols(plot_type_view)
         graph_name_view = st.multiselect('Viewing the graph', graphs_view, max_selections=1)
-    if len(graph_name_view) > 0:
-        data = artic_read_data(plot_type_view, graph_name_view[0])
-        with st.spinner('Plotting...'):
-            time.sleep(1)
-        if plot_type_view == 'seasonal':
-            plotter = Seasonal.plot_function(
-                title=data['title'].tolist()[0],
-                series=data['series_name'].tolist(),
-                cut_off=int(data['cut_off'].tolist()[0]),
-                start_date=data['ts_start'].tolist()[0],
-                end_date=data['ts_end'].tolist()[0],
-                verbose=bool(data['verbose'].tolist()[0]),
-                folded=bool(data['folded'].tolist()[0]),
-                precision=int(data['precision'].tolist()[0])
-            )
-        elif plot_type_view == 'line':
-            plotter = Line.plot_function(
-                title=data['title'].tolist()[0],
-                series=data['series_name'].tolist(),
-                labels=data['labels'].tolist(),
-                start_date=data['ts_start'].tolist()[0],
-                end_date=data['ts_end'].tolist()[0],
-                precision=int(data['precision'].tolist()[0])
-            )
-        st.text("Config being plotted")
-        st.write(data.T)
+    with col_rest:
+        if len(graph_name_view) > 0:
+            data = artic_read_data(plot_type_view, graph_name_view[0])
+            with st.spinner('Plotting...'):
+                time.sleep(1)
+            pipe_args_in_plot_method(data, plot_type_view)
+            st.text("Config being plotted")
+            st.write(data)
 
 with tab_delete:
     st.text('Deleting a chart')

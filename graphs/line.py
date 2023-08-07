@@ -47,14 +47,14 @@ def plot_lines(
         title: str = "",
         start_date: str = None,
         end_date: str = None,
-        precision=2
+        precision: int = None
 ):
     if series is not None:
         end_date = evaluate_not_none(
             end_date or "(yearend (today))")
         start_date = evaluate_not_none(
             start_date or "(yearstart (deltayears (today) -10)))")
-        data = fetch_series(series, start=start_date, end=end_date).asfreq('D').interpolate().round(precision)
+        data = fetch_series(series, start=start_date, end=end_date).asfreq('D').interpolate().round(precision or 2)
         data.columns = labels
         interpolated = data.stack().reset_index()
         interpolated.columns = ['date', 'label', 'value']

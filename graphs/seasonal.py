@@ -96,7 +96,7 @@ def plot_seasonal(
         end_date: str = None,
         verbose: bool = True,
         folded: bool = True,
-        precision=2,
+        precision: int = None,
 ):
     if series is not None:
         cut_off = cut_off or 2018
@@ -106,7 +106,7 @@ def plot_seasonal(
             start_date or "(yearstart (deltayears (today) -10)))")
         data = fetch_series(series, start=start_date, end=end_date)
         seasonal = data.asfreq('D').interpolate().sum(axis=1)
-        seasonal = seasonal.reset_index().assign(predicted=False).round(precision)
+        seasonal = seasonal.reset_index().assign(predicted=False).round(precision or 2)
         seasonal.columns = ['__0__', '__2__', '__1__']
         __seasonal_plot(
             title,
@@ -117,7 +117,6 @@ def plot_seasonal(
             verbose
         )
         plot_documentation(folded, verbose)
-
 
 
 def __seasonal_plot(title, series, data, cut_off, specs, verbose):
@@ -141,6 +140,7 @@ def __seasonal_plot(title, series, data, cut_off, specs, verbose):
     )
     if verbose:
         st.write(series)
+
 
 Seasonal = Plot(
     SEASONAL_COLS_DICT,
