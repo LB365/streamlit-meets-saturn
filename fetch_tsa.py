@@ -6,10 +6,8 @@ from tshistory.api import timeseries
 from dotenv import load_dotenv
 
 load_dotenv()
-TSA = timeseries(os.getenv('tsa_url'))
-CATALOG = TSA.catalog()
-catalog = pd.DataFrame(*CATALOG.values())
-
+URL = os.getenv('tsa_url')
+TSA = timeseries(URL)
 
 @st.cache_data(ttl=60 * 60)  # Every hour
 def fetch_catalog():
