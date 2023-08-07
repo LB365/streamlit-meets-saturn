@@ -143,6 +143,7 @@ with tab_view:
                 end_date=data['ts_end'].tolist()[0],
                 verbose=bool(data['verbose'].tolist()[0]),
                 folded=bool(data['folded'].tolist()[0]),
+                precision=int(data['precision'].tolist()[0])
             )
         elif plot_type_view == 'line':
             plotter = Line.plot_function(
@@ -151,6 +152,7 @@ with tab_view:
                 labels=data['labels'].tolist(),
                 start_date=data['ts_start'].tolist()[0],
                 end_date=data['ts_end'].tolist()[0],
+                precision=int(data['precision'].tolist()[0])
             )
         st.text("Config being plotted")
         st.write(data.T)

@@ -1,29 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "usermeta": {
-<<<<<<< HEAD
-    "deneb": {
-      "build": "1.4.0.0",
-      "metaVersion": 1,
-      "provider": "vegaLite",
-      "providerVersion": "5.4.0"
-    },
-    "interactivity": {
-      "tooltip": true,
-      "contextMenu": true,
-      "selection": true,
-      "highlight": false,
-      "dataPointLimit": 50
-    },
-    "information": {
-      "name": "seasonal-deneb",
-      "description": "plot seasonal time series, can use a \"predicted\" column to change the line type",
-      "author": "Loic Balland",
-      "uuid": "ed97caa9-2c57-47bf-9a92-d79cff3da451",
-      "generated": "2022-09-25T14:42:12.744Z"
-    },
-=======
->>>>>>> 57e236a0a42b583994600af2986168280e5cbf4b
     "dataset": [
       {
         "key": "__0__",
@@ -100,7 +77,7 @@
     }
   ],
   "encoding": {
-    "x": {"field": "__0__", "type": "temporal", "title": ""},
+    "x": {"field": "__0__", "type": "temporal", "title": "", "axis":{"format": "%b-%y"}},
     "y": {"scale": {"zero": false}}
   },
   "layer": [
@@ -165,35 +142,5 @@
     }
   ],
   "autosize": {"type": "fit", "contains": "padding"},
-  "config": {
-    "background": "#ffffff",
-    "axis": {
-      "labelColor": "#31333F",
-      "titleColor": "#31333F",
-      "gridColor": "rgba(49, 51, 63, 0.2)",
-      "labelFont": "\"Source Sans Pro\", sans-serif",
-      "titleFont": "\"Source Sans Pro\", sans-serif",
-      "labelFontSize": 12,
-      "titleFontSize": 12
-    },
-    "legend": {
-      "labelColor": "#31333F",
-      "titleColor": "#31333F",
-      "labelFont": "\"Source Sans Pro\", sans-serif",
-      "titleFont": "\"Source Sans Pro\", sans-serif",
-      "labelFontSize": 12,
-      "titleFontSize": 12
-    },
-    "title": {
-      "color": "#31333F",
-      "subtitleColor": "#31333F",
-      "labelFont": "\"Source Sans Pro\", sans-serif",
-      "titleFont": "\"Source Sans Pro\", sans-serif",
-      "labelFontSize": 12,
-      "titleFontSize": 12
-    },
-    "header": {"labelColor": "#31333F"},
-    "view": {"continuousHeight": 350, "continuousWidth": 400}
-  },
   "padding": {"bottom": 20}
 }

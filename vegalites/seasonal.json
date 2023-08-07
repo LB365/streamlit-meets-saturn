@@ -3,7 +3,8 @@
     "axis": {
       "domainWidth": 1,
       "grid": true,
-      "labelPadding": 2,
+      "labelPadding": 12,
+      "labelOffset": 12,
       "tickSize": 5,
       "tickWidth": 0.5,
       "titleFontWeight": "bold",

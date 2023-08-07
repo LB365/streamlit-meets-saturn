@@ -11,6 +11,10 @@ def validate(df):
     return True, df
 
 
+def plot_documentation():
+    return ""
+
+
 LINES_COLS_DICT = {
     'title': st.column_config.TextColumn(
     ),
@@ -26,6 +30,14 @@ LINES_COLS_DICT = {
     'ts_end': st.column_config.TextColumn(
         label="End date to plot",
     ),
+    'precision': st.column_config.NumberColumn(
+        "precision",
+        help="Data rounding",
+        min_value=0,
+        max_value=10,
+        step=1,
+        format="%d",
+    ),
 }
 
 
@@ -34,14 +46,15 @@ def plot_lines(
         labels: list[str],
         title: str = "",
         start_date: str = None,
-        end_date: str = None
+        end_date: str = None,
+        precision=2
 ):
     if series is not None:
         end_date = evaluate_not_none(
             end_date or "(yearend (today))")
         start_date = evaluate_not_none(
             start_date or "(yearstart (deltayears (today) -10)))")
-        data = fetch_series(series, start=start_date, end=end_date).asfreq('D').interpolate()
+        data = fetch_series(series, start=start_date, end=end_date).asfreq('D').interpolate().round(precision)
         data.columns = labels
         interpolated = data.stack().reset_index()
         interpolated.columns = ['date', 'label', 'value']
@@ -58,6 +71,7 @@ def plot_lines(
         ) + base.mark_rule().encode(x='now')
                  ).interactive(bind_y=False)
         st.altair_chart(chart, use_container_width=True, theme=None)
+        plot_documentation()
 
 
-Line = Plot(LINES_COLS_DICT, plot_lines, validate)
+Line = Plot(LINES_COLS_DICT, plot_lines, validate, plot_documentation)

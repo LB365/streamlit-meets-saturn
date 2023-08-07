@@ -10,8 +10,10 @@ from fetch import fetch_catalog, fetch_series
 from graphs import Plot
 
 CUTOFF_YEARS = [2018, 2019, 2020, 2021, 2022]
+
 with open(HERE / 'vegalites' / 'seasonal.json') as file:
     VEGA_SEASONAL = json.load(file)
+
 with open(HERE / 'vegalites' / 'seasonal_unfold.json') as file:
     VEGA_SEASONAL_UNFOLD = json.load(file)
 
@@ -41,7 +43,28 @@ SEASONAL_COLS_DICT = {
         default=True),
     'verbose': st.column_config.CheckboxColumn(
         default=False),
+    'precision': st.column_config.NumberColumn(
+        "precision",
+        help="Data rounding",
+        min_value=0,
+        max_value=10,
+        step=1,
+        format="%d",
+    ),
 }
+
+
+def plot_documentation(folded, verbose):
+    if verbose:
+        if folded:
+            st.caption(
+                "Seasonality chart with the seasonal range representing the min-max values up to the cutoff year"
+            )
+        else:
+            st.caption(
+                """Seasonality unfolded chart with the seasonal range representing 
+                the q1-q3 seasonal quantiles, ignoring the cutoff year"""
+            )
 
 
 def validate_plot_seasonal(df):
@@ -71,8 +94,9 @@ def plot_seasonal(
         cut_off: int = None,
         start_date: str = None,
         end_date: str = None,
-        verbose: bool = False,
+        verbose: bool = True,
         folded: bool = True,
+        precision=2,
 ):
     if series is not None:
         cut_off = cut_off or 2018
@@ -82,7 +106,7 @@ def plot_seasonal(
             start_date or "(yearstart (deltayears (today) -10)))")
         data = fetch_series(series, start=start_date, end=end_date)
         seasonal = data.asfreq('D').interpolate().sum(axis=1)
-        seasonal = seasonal.reset_index().assign(predicted=False)
+        seasonal = seasonal.reset_index().assign(predicted=False).round(precision)
         seasonal.columns = ['__0__', '__2__', '__1__']
         __seasonal_plot(
             title,
@@ -92,6 +116,8 @@ def plot_seasonal(
             VEGA_SEASONAL if folded else VEGA_SEASONAL_UNFOLD,
             verbose
         )
+        plot_documentation(folded, verbose)
+
 
 
 def __seasonal_plot(title, series, data, cut_off, specs, verbose):
@@ -116,34 +142,9 @@ def __seasonal_plot(title, series, data, cut_off, specs, verbose):
     if verbose:
         st.write(series)
 
-
-def manual_seasonal_plot():
-    catalog = fetch_catalog()
-    series = st.multiselect(
-        'Select tickers to sum',
-        catalog,
-        format_func=lambda x: x,
-    )
-    start_date_seasonal = st.date_input(
-        'start_date_seasonal',
-        datetime.date(2012, 1, 1)
-    )
-    cutoff = st.selectbox(
-        'Select a cutoff year', CUTOFF_YEARS)
-    folded = st.checkbox('folded', value=True)
-    if len(series) > 0:
-        start_date_str = start_date_seasonal.strftime('%Y-%m-%d')
-        return plot_seasonal(
-            series=series,
-            cut_off=cutoff,
-            start_date=f'(date "{start_date_str}")',
-            verbose=False,
-            folded=folded,
-        )
-
-
 Seasonal = Plot(
     SEASONAL_COLS_DICT,
     plot_seasonal,
-    validate_plot_seasonal
+    validate_plot_seasonal,
+    plot_documentation,
 )
