@@ -1,6 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "usermeta": {
+<<<<<<< HEAD
     "deneb": {
       "build": "1.4.0.0",
       "metaVersion": 1,
@@ -21,6 +22,8 @@
       "uuid": "ed97caa9-2c57-47bf-9a92-d79cff3da451",
       "generated": "2022-09-25T14:42:12.744Z"
     },
+=======
+>>>>>>> 57e236a0a42b583994600af2986168280e5cbf4b
     "dataset": [
       {
         "key": "__0__",
