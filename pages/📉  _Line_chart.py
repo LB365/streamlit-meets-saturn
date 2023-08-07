@@ -11,7 +11,7 @@ def manual_lines_plot():
     col1, col2 = st.columns(2)
     with col1:
         options = st.multiselect(
-            'Select a time series',
+            'Select a time series for a line chart graph',
             catalog,
             catalog[-1]
         )

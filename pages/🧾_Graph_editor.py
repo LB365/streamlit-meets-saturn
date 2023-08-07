@@ -14,6 +14,7 @@ from fetch_artic import (
 from graphs.seasonal import Seasonal
 from graphs.line import Line
 from graphs.pipe_args import pipe_args_in_plot_method
+
 available_plot_types = list(set(artic_list_libraries()).intersection(graph_types))
 
 SEASONAL_COLS = list(Seasonal.column_types.keys())
