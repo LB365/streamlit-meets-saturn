@@ -105,7 +105,7 @@ def plot_seasonal(
         start_date = evaluate_not_none(
             start_date or "(yearstart (deltayears (today) -10)))")
         data = fetch_series(series, start=start_date, end=end_date)
-        seasonal = data.asfreq('D').interpolate().sum(axis=1)
+        seasonal = data.resample('D').mean().asfreq('D').interpolate().sum(axis=1)
         seasonal = seasonal.reset_index().assign(predicted=False).round(precision or 2)
         seasonal.columns = ['__0__', '__2__', '__1__']
         __seasonal_plot(
