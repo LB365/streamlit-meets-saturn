@@ -1,26 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "usermeta": {
-    "deneb": {
-      "build": "1.4.0.0",
-      "metaVersion": 1,
-      "provider": "vegaLite",
-      "providerVersion": "5.4.0"
-    },
-    "interactivity": {
-      "tooltip": true,
-      "contextMenu": true,
-      "selection": true,
-      "highlight": false,
-      "dataPointLimit": 50
-    },
-    "information": {
-      "name": "seasonal-deneb",
-      "description": "plot seasonal time series, can use a \"predicted\" column to change the line type",
-      "author": "Loic Balland",
-      "uuid": "ed97caa9-2c57-47bf-9a92-d79cff3da451",
-      "generated": "2022-09-25T14:42:12.744Z"
-    },
     "dataset": [
       {
         "key": "__0__",

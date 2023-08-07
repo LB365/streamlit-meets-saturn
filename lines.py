@@ -1,7 +1,7 @@
 import datetime
 import streamlit as st
 from pathlib import Path
-from fetch import fetch_catalog, fetch_series
+from fetch_tsa import fetch_catalog, fetch_series
 st.set_page_config(
     page_title="saturn_graphs",
     page_icon="🧊",
