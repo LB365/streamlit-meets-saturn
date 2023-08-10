@@ -1,21 +1,21 @@
-from fetch_tsa import fetch_catalog
+from viz.fetch_tsa import fetch_catalog
 import datetime
 import streamlit as st
-from graphs.seasonal import (
+from viz.graphs.seasonal import (
     plot_seasonal,
     CUTOFF_YEARS
 )
-
+from viz.graphs import COL_RATIO
 
 def manual_seasonal_plot():
     catalog = fetch_catalog()
-    col1, col2 = st.columns(2)
+    series = st.multiselect(
+        'Select tickers to sum',
+        catalog,
+        format_func=lambda x: x,
+    )
+    col1, col2 = st.columns(COL_RATIO)
     with col1:
-        series = st.multiselect(
-            'Select tickers to sum',
-            catalog,
-            format_func=lambda x: x,
-        )
         start_date_seasonal = st.date_input(
             'start_date_seasonal',
             datetime.date(2012, 1, 1)

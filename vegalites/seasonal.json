@@ -1,47 +1,36 @@
 {
+  "autosize": {"type": "fit", "contains": "padding"},
   "config": {
+    "background": "#ffffff",
     "axis": {
-      "domainWidth": 1,
-      "grid": true,
-      "labelPadding": 12,
-      "labelOffset": 12,
-      "tickSize": 5,
-      "tickWidth": 0.5,
-      "titleFontWeight": "bold",
-      "labelFontSize": 16
+      "labelColor": "#31333F",
+      "titleColor": "#31333F",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 13,
+      "labelFlush":false
     },
-    "axisBand": {"grid": false},
-    "axisX": {"gridWidth": 0.5},
-    "axisY": {"gridWidth": 1},
     "legend": {
-      "labelFontSize": 16,
-      "padding": 1,
-      "symbolSize": 100,
-      "symbolType": "square",
-      "symbolStrokeWidth": 3
+      "labelColor": "#31333F",
+      "titleColor": "#31333F",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 12,
+      "orient": "bottom"
     },
-    "range": {
-      "category": [
-        "#3e5c69",
-        "#6793a6",
-        "#182429",
-        "#0570b0",
-        "#3690c0",
-        "#74a9cf",
-        "#a6bddb",
-        "#e2ddf2"
-      ]
-    }
-  },
+    "title": {
+      "color": "#31333F",
+      "subtitleColor": "#31333F",
+      "labelFont": "\"Source Sans Pro\", sans-serif",
+      "titleFont": "\"Source Sans Pro\", sans-serif",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "header": {"labelColor": "#31333F"}},
   "width": "container",
   "height": 100,
   "data": {"name": "dataset"},
-  "params": [
-    {
-      "name": "cutoff_year",
-      "value": 2018
-    }
-  ],
   "transform": [
     {
       "filter": "!((month(datum['__0__']) == 1) && (date(datum['__0__']) == 29))"

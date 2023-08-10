@@ -1,13 +1,11 @@
-import datetime
-
 import streamlit as st
 import pandas as pd
 import json
-from moments import evaluate_not_none
+from viz.moments import evaluate_not_none
 from Home import HERE
-from fetch import fetch_catalog, fetch_series
+from viz.fetch_tsa import fetch_catalog, fetch_series
 
-from graphs import Plot
+from viz.graphs import Plot
 
 CUTOFF_YEARS = [2018, 2019, 2020, 2021, 2022]
 
@@ -131,6 +129,8 @@ def __seasonal_plot(title, series, data, cut_off, specs, verbose):
                 "name": "cutoff_year",
                 "value": cut_off
             }],
+            'autosize': specs['autosize'],
+            'config': specs['config'],
             'transform': specs['transform'],
             'encoding': specs['encoding'],
             'layer': specs['layer']

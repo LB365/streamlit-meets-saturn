@@ -2,7 +2,7 @@ import time
 
 import streamlit as st
 import pandas as pd
-from fetch_artic import (
+from viz.fetch_arctic import (
     AC,
     artic_list_symbols,
     artic_list_versions,
@@ -11,9 +11,10 @@ from fetch_artic import (
     graph_types,
 )
 
-from graphs.seasonal import Seasonal
-from graphs.line import Line
-from graphs.pipe_args import pipe_args_in_plot_method
+from viz.graphs.seasonal import Seasonal
+from viz.graphs.line import Line
+from viz.graphs.balance import Balance
+from viz.graphs.pipe_args import pipe_args_in_plot_method
 
 available_plot_types = list(set(artic_list_libraries()).intersection(graph_types))
 
@@ -22,6 +23,7 @@ SEASONAL_COLS = list(Seasonal.column_types.keys())
 PLOT_TYPES = {
     'seasonal': Seasonal,
     'line': Line,
+    'balance': Balance,
 }
 
 tab_edit, tab_view, tab_delete = st.tabs([

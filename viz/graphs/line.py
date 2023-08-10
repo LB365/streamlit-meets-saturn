@@ -1,10 +1,9 @@
 import altair as alt
 import streamlit as st
-from moments import evaluate_not_none
-from Home import HERE
-from fetch import fetch_catalog, fetch_series
+from viz.moments import evaluate_not_none
+from viz.fetch_tsa import fetch_catalog, fetch_series
 import pandas as pd
-from graphs import Plot
+from viz.graphs import Plot
 
 
 def validate(df):
@@ -68,7 +67,11 @@ def plot_lines(
             x=alt.X('date').title(""),
             y=alt.Y('value').title(""),
             color=alt.Color('label').title(""),
-        ) + base.mark_rule().encode(x='now')
+        ) + base.mark_rule().encode(
+            x='now',
+            strokeDash=[2, 4],
+            strokeWidth=0.5
+        )
                  ).interactive(bind_y=False)
         st.altair_chart(chart, use_container_width=True, theme=None)
         plot_documentation()
