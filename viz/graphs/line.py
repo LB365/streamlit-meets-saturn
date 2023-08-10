@@ -71,8 +71,7 @@ def plot_lines(
             x='now',
             strokeDash=[2, 4],
             strokeWidth=0.5
-        )
-                 ).interactive(bind_y=False)
+        )).interactive(bind_y=False)
         st.altair_chart(chart, use_container_width=True, theme=None)
         plot_documentation()
 
