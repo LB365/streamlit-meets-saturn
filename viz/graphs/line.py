@@ -60,17 +60,19 @@ def plot_lines(
         interpolated['now'] = pd.Timestamp.now().floor('D')
         base = alt.Chart(
             interpolated,
-            title=alt.Title(title, anchor=alt.TitleAnchor('start'))
+            title=alt.Title(title, anchor=alt.TitleAnchor('start')),
+
         )
         chart = (base.mark_line()
                  .encode(
             x=alt.X('date').title(""),
-            y=alt.Y('value').title(""),
+            y=alt.Y('value', scale=alt.Scale(zero=False)).title(""),
             color=alt.Color('label').title(""),
-        ) + base.mark_rule().encode(
-            x='now',
+        ) + base.mark_rule(
             strokeDash=[2, 4],
             strokeWidth=0.5
+        ).encode(
+            x='now',
         )).interactive(bind_y=False)
         st.altair_chart(chart, use_container_width=True, theme=None)
         plot_documentation()

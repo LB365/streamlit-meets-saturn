@@ -48,7 +48,7 @@ def plot_table(
     start_date = start_date or "(yearstart (today))"
     series = config['series_id'].tolist()
     data = fetch_series(series)
-    jinja_html = table_to_html_for_jinja(
+    computed_data, jinja_html = table_to_html_for_jinja(
         data,
         config,
         freq,
@@ -56,5 +56,7 @@ def plot_table(
         end_date
     )
     html(jinja_html)
+    return computed_data
+
 
 Balance = Plot(BALANCE_COLS_DICT, plot_table, validate, plot_documentation)
