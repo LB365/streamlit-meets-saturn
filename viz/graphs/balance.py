@@ -1,6 +1,6 @@
 from viz.graphs.balances.blueprint import table_to_html_for_jinja
 import streamlit as st
-from viz.fetch_tsa import fetch_catalog, fetch_series
+from viz.fetch_tsa import big_fetch_series
 from viz.graphs import Plot
 from streamlit.components.v1 import html
 
@@ -42,20 +42,22 @@ def plot_table(
         config,
         freq: str = None,
         start_date: str = None,
-        end_date: str = None):
+        end_date: str = None,
+        diff_mode:bool=False):
     freq = freq or "MS"
     end_date = end_date or "(yearend (today))"
     start_date = start_date or "(yearstart (today))"
     series = config['series_id'].tolist()
-    data = fetch_series(series)
+    data = big_fetch_series(series)
     computed_data, jinja_html = table_to_html_for_jinja(
         data,
         config,
         freq,
         start_date,
-        end_date
+        end_date,
+        diff_mode
     )
-    html(jinja_html)
+    html(jinja_html, scrolling=True)
     return computed_data
 
 

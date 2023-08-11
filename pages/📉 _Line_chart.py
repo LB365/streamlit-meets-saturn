@@ -23,8 +23,11 @@ def manual_lines_plot():
             catalog[-1]
         )
     if len(options) > 0:
-        start_date_str = start_date.strftime('%Y-%m-%d')
-        plot_lines(options, options, start_date=f'(date "{start_date_str}")')
+        plot_lines(
+            options,
+            options,
+            start_date=f'(date "{start_date:%Y-%m-%d}")'
+        )
     st.write('Selected', options)
 
 
