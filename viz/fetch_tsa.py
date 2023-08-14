@@ -9,7 +9,7 @@ load_dotenv()
 URL = os.getenv('tsa_url')
 TSA = timeseries(URL)
 
-@st.cache_data(ttl=60 * 60)  # Every hour
+@st.cache_data(ttl=60)  # Every hour
 def fetch_catalog():
     catalog = TSA.catalog()
     return pd.DataFrame(*catalog.values()).iloc[:, 0].tolist()

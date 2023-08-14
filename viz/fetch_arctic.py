@@ -14,6 +14,9 @@ for graph_type in graph_types:
     if graph_type not in AC.list_libraries():
         AC.create_library(graph_type)
 
+from tenacity import retry, retry_if_exception_type
+from arcticdb_ext.exceptions import InternalException
+
 TTL = 15
 
 @st.cache_data(ttl=TTL)
@@ -25,10 +28,13 @@ def artic_list_symbols(lib_name: str):
 def artic_list_libraries():
     return AC.list_libraries()
 
+@retry(retry=retry_if_exception_type(InternalException))
+def _arctic_read_data(lib_name: str, symbol: str, *args, **kwargs):
+    return AC[lib_name].read(symbol,*args, **kwargs).data
 
 @st.cache_data(ttl=2 * TTL)
 def artic_read_data(lib_name: str, symbol: str, *args, **kwargs):
-    return AC[lib_name].read(symbol, *args, **kwargs).data
+    return _arctic_read_data(lib_name, symbol,*args, **kwargs)
 
 
 @st.cache_data(ttl=2 * TTL)
