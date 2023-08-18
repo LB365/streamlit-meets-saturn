@@ -13,6 +13,21 @@ def validate(df):
 def plot_documentation():
     return ""
 
+timeunits = {
+    'M':'yearmonth',
+    'Q':'yearquarter',
+    'W-FRI':'yearmonthdate',
+    'D':'yearmonthdate',
+    'Y':'year',
+}
+
+formatdate = {
+    'M':'%b-%y',
+    'Q': 'Q%q-%y',
+    'W-FRI':'%d-%b-%y',
+    'D':'%d-%b',
+    'Y':'%y',
+}
 
 LINES_COLS_DICT = {
     'title': st.column_config.TextColumn(
